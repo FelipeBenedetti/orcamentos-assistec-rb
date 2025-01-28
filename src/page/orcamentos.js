@@ -1,32 +1,53 @@
 import React, { useState } from "react";
 import PercentageSelector from "./percentSelector";
 import ProdutosAdicionais from "./produtosAdicionais";
+import supabase from "../external/supabaseconfig";
 import "./orcamentos.css";
 
+
+const ComponenteOrcamento = ({ nome, dados, onChange }) => (
+  <label>
+    {nome}:
+    <input
+      type="text"
+      placeholder={`Insira aqui o modelo do ${nome}`}
+      value={dados.modelo}
+      onChange={(e) => onChange("modelo", e.target.value)}
+    />
+    <input
+      type="number"
+      placeholder={`Insira aqui o custo do ${nome}`}
+      value={dados.custo}
+      onChange={(e) => onChange("custo", Number(e.target.value) || 0)}
+    />
+    <PercentageSelector
+      label={`Lucro sobre ${nome}:`}
+      value={dados.percent}
+      onChange={(value) => onChange("percent", value)}
+    />
+  </label>
+);
+
 export default function Orcamentos() {
-  const [processadorModelo, setProcessadorModel] = useState('');
-  const [processadorCusto, setProcessadorCusto] = useState(0)
-  const [processadorPercent, setProcessadorPercent] = useState(0);
-  const [placaMaeModelo, setPlacaMaeModelo] = useState('');
-  const [placaMaeCusto, setPlacaMaeCusto] = useState(0);
-  const [placaMaePercent, setPlacaMaePercent] = useState(0);
-  const [memoriaRamModelo, setMemoriaRamModelo] = useState('');
-  const [memoriaRamCusto, setMemoriaRamCusto] = useState(0);
-  const [memoriaramPercent, setMemoriaramPercent] = useState(0);
-  const [armazenamentoNome, setArmazenamentoNome] = useState('');
-  const [armazenamentoCusto, setArmazenamentoCusto] = useState(0);
-  const [armazenamentoPercent, setArmazenamentoPercent] = useState(0);
-  const [gabineteNome, setGabineteNome] = useState('');
-  const [gabineteCusto, setGabineteCusto] = useState(0);
-  const [gabinetePercent, setGabinetePercent] = useState(0);
+  const [componentes, setComponentes] = useState({
+    processador: { modelo: "", custo: 0, percent: 0 },
+    placaMae: { modelo: "", custo: 0, percent: 0 },
+    memoriaRam: { modelo: "", custo: 0, percent: 0 },
+    armazenamento: { modelo: "", custo: 0, percent: 0 },
+    gabinete: { modelo: "", custo: 0, percent: 0 },
+  });
   const [produtosAdicionais, setProdutosAdicionais] = useState([]);
-  const [valorFinal, setValorFinal] = useState(0);
+  const [salvando, setSalvando] = useState(false);
+
+  const atualizarComponente = (componente, campo, valor) => {
+    setComponentes((prev) => ({
+      ...prev,
+      [componente]: { ...prev[componente], [campo]: valor },
+    }));
+  };
 
   const adicionarProduto = () => {
-    setProdutosAdicionais((prev) => [
-      ...prev,
-      { nome: "", valor: "", lucro: "" }
-    ]);
+    setProdutosAdicionais((prev) => [...prev, { nome: "", valor: "", lucro: "" }]);
   };
 
   const atualizarProduto = (index, field, value) => {
@@ -35,89 +56,80 @@ export default function Orcamentos() {
     setProdutosAdicionais(novosProdutos);
   };
 
+  const calcularValorFinal = () => {
+    const totalComponentes = Object.values(componentes).reduce((total, componente) => {
+      const valorComLucro = componente.custo + (componente.custo * componente.percent) / 100;
+      return total + valorComLucro;
+    }, 0);
 
+    const totalProdutosAdicionais = produtosAdicionais.reduce((total, produto) => {
+      const valorComLucro = parseFloat(produto.valor || 0) + (parseFloat(produto.valor || 0) * parseFloat(produto.lucro || 0)) / 100;
+      return total + valorComLucro;
+    }, 0);
+
+    return totalComponentes + totalProdutosAdicionais;
+  };
+
+  const salvarOrcamento = async () => {
+    setSalvando(true);
+
+    const orcamento = {
+      componentes,
+      produtosAdicionais,
+      valorFinal: calcularValorFinal(),
+      dataCriacao: new Date().toISOString(),
+    };
+
+    const { data, error } = await supabase.from("orcamentos").insert([orcamento]);
+
+    if (error) {
+      console.error("Erro ao salvar orçamento:", error.message);
+      alert("Erro ao salvar o orçamento. Tente novamente.");
+    } else {
+      alert("Orçamento salvo com sucesso!");
+    }
+
+    setSalvando(false);
+  };
 
   return (
     <div className="orcamentos">
       <form>
-        <title>Orçamentos</title>
-        <h1>Gerar Orçamentos</h1>
-        <label>
-          Processador:
-          <input
-            name="processadorNomee"
-            type="text"
-            placeholder="Insira aqui o modelo da CPU"
-            value={processadorModelo}
-            onChange={(e) => setProcessadorModel(e.target.value)}
-          />
-          <input
-            type="number"
-            placeholder="Valor de Custo: "
-            value={processadorCusto}
-            onChange={(e) => setProcessadorCusto(parseFloat(e.target.value) || 0)}
-          />
-          <PercentageSelector
-            label="Lucro sobre o Processador:"
-            value={processadorPercent} onChange={setProcessadorPercent}
-          />
-        </label>
-
-        <label>
-          Placa Mãe:
-          <input type="text" placeholder="Insira aqui o modelo da placa mãe: "
-            value={placaMaeModelo} onChange={(e) => setPlacaMaeModelo(parseFloat(e.target.value))} />
-          <input type="number" placeholder="Insira aqui o custo da placa mãe: "
-            value={placaMaeCusto} onChange={(e) => setPlacaMaeCusto(parseFloat(e.target.value))} />
-          <PercentageSelector
-            label="Lucro sobre a Placa Mãe:"
-            value={placaMaePercent}
-            onChange={setPlacaMaePercent}
-          />
-        </label>
-        <label>
-          Memória Ram:
-          <input type="text" placeholder="Insira aqui o modelo da memória ram: "
-            value={memoriaRamModelo} onChange={(e) => setMemoriaRamModelo(parseFloat(e.target.value))} />
-          <input type="number" placeholder="Insira aqui o custo da memória ram: "
-            value={memoriaRamCusto} onChange={(e) => setMemoriaRamCusto(parseFloat(e.target.value))} />
-          <PercentageSelector
-            label="Lucro sobre a memória ram:"
-            value={memoriaramPercent}
-            onChange={setMemoriaramPercent}
-          />
-        </label>
-        <label>
-          Gabinete:
-          <input type="text" placeholder="Insira aqui o modelo do gabinete: "
-            value={gabineteNome} onChange={(e) => setGabineteNome(parseFloat(e.target.value))} />
-          <input type="number" placeholder="Insira aqui o custo do gabinete: "
-            value={gabineteCusto} onChange={(e) => setGabineteCusto(parseFloat(e.target.value))} />
-          <PercentageSelector
-            label="Lucro sobre o Gabinete: "
-            value={gabinetePercent}
-            onChange={setGabinetePercent}
-          />
-        </label>
-        <label>
-          Armazenamento:
-          <input type="text" placeholder="Insira aqui o modelo do SSD/HD: "
-            value={armazenamentoNome} onChange={(e) => setArmazenamentoNome(parseFloat(e.target.value))} />
-          <input type="number" placeholder="Insira aqui o custo do SSD/HD: "
-            value={armazenamentoCusto} onChange={(e) => setArmazenamentoCusto(parseFloat(e.target.value))} />
-          <PercentageSelector
-            label="Lucro sobre o Armazenamento: "
-            value={armazenamentoPercent}
-            onChange={setArmazenamentoPercent}
-          />
-        </label>
-
-        {/* Produtos Adicionais */}
+        <h1>Orçamentos</h1>
+        <ComponenteOrcamento
+          nome="Processador"
+          dados={componentes.processador}
+          onChange={(campo, valor) => atualizarComponente("processador", campo, valor)}
+        />
+        <ComponenteOrcamento
+          nome="Placa Mãe"
+          dados={componentes.placaMae}
+          onChange={(campo, valor) => atualizarComponente("placaMae", campo, valor)}
+        />
+        <ComponenteOrcamento
+          nome="Memória Ram"
+          dados={componentes.memoriaRam}
+          onChange={(campo, valor) => atualizarComponente("memoriaRam", campo, valor)}
+        />
+        <ComponenteOrcamento
+          nome="Armazenamento"
+          dados={componentes.armazenamento}
+          onChange={(campo, valor) => atualizarComponente("armazenamento", campo, valor)}
+        />
+        <ComponenteOrcamento
+          nome="Gabinete"
+          dados={componentes.gabinete}
+          onChange={(campo, valor) => atualizarComponente("gabinete", campo, valor)}
+        />
         <ProdutosAdicionais
           produtos={produtosAdicionais}
           onAdicionar={adicionarProduto}
           onAtualizar={atualizarProduto}
         />
+        <h2>Valor Final: R$ {calcularValorFinal().toFixed(2)}</h2>
+        <button type="button" onClick={salvarOrcamento} disabled={salvando}>
+          {salvando ? "Salvando..." : "Salvar Orçamento"}
+        </button>
       </form>
     </div>
   );
