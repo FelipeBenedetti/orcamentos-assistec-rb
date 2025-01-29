@@ -29,6 +29,7 @@ const ComponenteOrcamento = ({ nome, dados, onChange }) => (
 
 export default function Orcamentos() {
   const [componentes, setComponentes] = useState({
+    cliente: "",
     processador: { modelo: "", custo: 0, percent: 0 },
     placaMae: { modelo: "", custo: 0, percent: 0 },
     memoriaRam: { modelo: "", custo: 0, percent: 0 },
@@ -59,43 +60,43 @@ export default function Orcamentos() {
   };
 
   const calcularValorFinal = () => {
-    const totalComponentes = Object.values(componentes).reduce(
-      (total, componente) => {
-        const valorComLucro =
-          componente.custo + (componente.custo * componente.percent) / 100;
+    const totalComponentes = Object.entries(componentes)
+      .filter(([key]) => key !== "cliente") // 🔹 Removemos "cliente"
+      .reduce((total, [, componente]) => {
+        const custo = Number(componente.custo) || 0;
+        const percent = Number(componente.percent) || 0;
+        const valorComLucro = custo + (custo * percent) / 100;
         return total + valorComLucro;
-      },
-      0,
-    );
-
-    const totalProdutosAdicionais = produtosAdicionais.reduce(
-      (total, produto) => {
-        const valorComLucro =
-          parseFloat(produto.valor || 0) +
-          (parseFloat(produto.valor || 0) * parseFloat(produto.lucro || 0)) /
-            100;
-        return total + valorComLucro;
-      },
-      0,
-    );
-
+      }, 0);
+  
+    const totalProdutosAdicionais = produtosAdicionais.reduce((total, produto) => {
+      const valor = Number(produto.valor) || 0;
+      const lucro = Number(produto.lucro) || 0;
+      const valorComLucro = valor + (valor * lucro) / 100;
+      return total + valorComLucro;
+    }, 0);
+  
     return totalComponentes + totalProdutosAdicionais;
   };
   
+
   const salvarOrcamento = async () => {
     setSalvando(true);
-  
+
     const orcamento = {
+      cliente: componentes.cliente, 
       componentes,
       produtos_adicionais: produtosAdicionais,
       valor_final: calcularValorFinal(),
-      data_criacao: new Date().toISOString(), // ✅ Nome correto
+      data_criacao: new Date().toISOString(),
     };
-    
+
     console.log("Salvando orçamento:", JSON.stringify(orcamento, null, 2));
-  
-    const { data, error } = await supabase.from("orcamentos").insert([orcamento]);
-  
+
+    const { data, error } = await supabase
+      .from("orcamentos")
+      .insert([orcamento]);
+
     if (error) {
       console.error("Erro ao salvar orçamento:", error);
       alert(`Erro ao salvar: ${error.message}`);
@@ -103,15 +104,26 @@ export default function Orcamentos() {
       console.log("Orçamento salvo:", data);
       alert("Orçamento salvo com sucesso!");
     }
-  
+
     setSalvando(false);
   };
-  
 
   return (
     <div className="orcamentos">
       <form>
         <h1>Orçamentos</h1>
+        <label>
+          Cliente:
+          <input
+            type="text"
+            placeholder="Insira o nome do cliente"
+            value={componentes.cliente}
+            onChange={(e) =>
+              setComponentes((prev) => ({ ...prev, cliente: e.target.value }))
+            }
+          />
+        </label>
+
         <ComponenteOrcamento
           nome="Processador"
           dados={componentes.processador}
