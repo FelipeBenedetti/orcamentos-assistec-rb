@@ -4,7 +4,6 @@ import ProdutosAdicionais from "./produtosAdicionais";
 import supabase from "../external/supabaseconfig";
 import "./orcamentos.css";
 
-
 const ComponenteOrcamento = ({ nome, dados, onChange }) => (
   <label>
     {nome}:
@@ -47,7 +46,10 @@ export default function Orcamentos() {
   };
 
   const adicionarProduto = () => {
-    setProdutosAdicionais((prev) => [...prev, { nome: "", valor: "", lucro: "" }]);
+    setProdutosAdicionais((prev) => [
+      ...prev,
+      { nome: "", valor: "", lucro: "" },
+    ]);
   };
 
   const atualizarProduto = (index, field, value) => {
@@ -57,15 +59,25 @@ export default function Orcamentos() {
   };
 
   const calcularValorFinal = () => {
-    const totalComponentes = Object.values(componentes).reduce((total, componente) => {
-      const valorComLucro = componente.custo + (componente.custo * componente.percent) / 100;
-      return total + valorComLucro;
-    }, 0);
+    const totalComponentes = Object.values(componentes).reduce(
+      (total, componente) => {
+        const valorComLucro =
+          componente.custo + (componente.custo * componente.percent) / 100;
+        return total + valorComLucro;
+      },
+      0,
+    );
 
-    const totalProdutosAdicionais = produtosAdicionais.reduce((total, produto) => {
-      const valorComLucro = parseFloat(produto.valor || 0) + (parseFloat(produto.valor || 0) * parseFloat(produto.lucro || 0)) / 100;
-      return total + valorComLucro;
-    }, 0);
+    const totalProdutosAdicionais = produtosAdicionais.reduce(
+      (total, produto) => {
+        const valorComLucro =
+          parseFloat(produto.valor || 0) +
+          (parseFloat(produto.valor || 0) * parseFloat(produto.lucro || 0)) /
+            100;
+        return total + valorComLucro;
+      },
+      0,
+    );
 
     return totalComponentes + totalProdutosAdicionais;
   };
@@ -80,7 +92,9 @@ export default function Orcamentos() {
       dataCriacao: new Date().toISOString(),
     };
 
-    const { data, error } = await supabase.from("orcamentos").insert([orcamento]);
+    const { data, error } = await supabase
+      .from("orcamentos")
+      .insert([orcamento]);
 
     if (error) {
       console.error("Erro ao salvar orçamento:", error.message);
@@ -99,27 +113,37 @@ export default function Orcamentos() {
         <ComponenteOrcamento
           nome="Processador"
           dados={componentes.processador}
-          onChange={(campo, valor) => atualizarComponente("processador", campo, valor)}
+          onChange={(campo, valor) =>
+            atualizarComponente("processador", campo, valor)
+          }
         />
         <ComponenteOrcamento
           nome="Placa Mãe"
           dados={componentes.placaMae}
-          onChange={(campo, valor) => atualizarComponente("placaMae", campo, valor)}
+          onChange={(campo, valor) =>
+            atualizarComponente("placaMae", campo, valor)
+          }
         />
         <ComponenteOrcamento
           nome="Memória Ram"
           dados={componentes.memoriaRam}
-          onChange={(campo, valor) => atualizarComponente("memoriaRam", campo, valor)}
+          onChange={(campo, valor) =>
+            atualizarComponente("memoriaRam", campo, valor)
+          }
         />
         <ComponenteOrcamento
           nome="Armazenamento"
           dados={componentes.armazenamento}
-          onChange={(campo, valor) => atualizarComponente("armazenamento", campo, valor)}
+          onChange={(campo, valor) =>
+            atualizarComponente("armazenamento", campo, valor)
+          }
         />
         <ComponenteOrcamento
           nome="Gabinete"
           dados={componentes.gabinete}
-          onChange={(campo, valor) => atualizarComponente("gabinete", campo, valor)}
+          onChange={(campo, valor) =>
+            atualizarComponente("gabinete", campo, valor)
+          }
         />
         <ProdutosAdicionais
           produtos={produtosAdicionais}

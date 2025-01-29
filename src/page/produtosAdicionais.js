@@ -1,7 +1,11 @@
 import React from "react";
 import PercentageSelector from "./percentSelector";
 
-export default function ProdutosAdicionais({ produtos, onAdicionar, onAtualizar }) {
+export default function ProdutosAdicionais({
+  produtos,
+  onAdicionar,
+  onAtualizar,
+}) {
   return (
     <div>
       <h2>Produtos Adicionais</h2>
@@ -38,11 +42,6 @@ export default function ProdutosAdicionais({ produtos, onAdicionar, onAtualizar 
     </div>
   );
 }
-
-
-
-
-
 
 /*
 const calcularValorFinal = () => {
