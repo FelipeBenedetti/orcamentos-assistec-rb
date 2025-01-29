@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
+import supabase from "../external/supabaseconfig";
 
-const supabase = createClient(
-  "https://<YOUR_SUPABASE_PROJECT>.supabase.co",
-  "<YOUR_SUPABASE_ANON_KEY>",
-);
 
 export default function ListarOrcamentos() {
   const [orcamentos, setOrcamentos] = useState([]);

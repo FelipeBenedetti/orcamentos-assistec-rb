@@ -81,30 +81,32 @@ export default function Orcamentos() {
 
     return totalComponentes + totalProdutosAdicionais;
   };
-
+  
   const salvarOrcamento = async () => {
     setSalvando(true);
-
+  
     const orcamento = {
       componentes,
-      produtosAdicionais,
-      valorFinal: calcularValorFinal(),
-      dataCriacao: new Date().toISOString(),
+      produtos_adicionais: produtosAdicionais,
+      valor_final: calcularValorFinal(),
+      data_criacao: new Date().toISOString(), // ✅ Nome correto
     };
-
-    const { data, error } = await supabase
-      .from("orcamentos")
-      .insert([orcamento]);
-
+    
+    console.log("Salvando orçamento:", JSON.stringify(orcamento, null, 2));
+  
+    const { data, error } = await supabase.from("orcamentos").insert([orcamento]);
+  
     if (error) {
-      console.error("Erro ao salvar orçamento:", error.message);
-      alert("Erro ao salvar o orçamento. Tente novamente.");
+      console.error("Erro ao salvar orçamento:", error);
+      alert(`Erro ao salvar: ${error.message}`);
     } else {
+      console.log("Orçamento salvo:", data);
       alert("Orçamento salvo com sucesso!");
     }
-
+  
     setSalvando(false);
   };
+  
 
   return (
     <div className="orcamentos">

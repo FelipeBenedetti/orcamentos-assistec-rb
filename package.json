@@ -5,12 +5,9 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.48.1",
     "cra-template": "1.2.0",
-    "html2canvas": "^1.4.1",
-    "jspdf": "^2.5.2",
     "prettier": "^3.4.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-input-percentage": "^1.0.7",
     "react-scripts": "5.0.1"
   },
   "scripts": {
