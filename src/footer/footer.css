@@ -1,0 +1,12 @@
+.footer{
+  display: flex;
+  justify-content: center;
+  background-color: black;
+  font-style: normal;
+  text-decoration: none;
+  text-align: center;
+}
+
+.footerh1{
+  color: white;
+  }

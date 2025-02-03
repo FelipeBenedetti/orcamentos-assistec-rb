@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import PercentageSelector from "./percentSelector";
-import ProdutosAdicionais from "./produtosAdicionais";
-import supabase from "../external/supabaseconfig";
-import "./orcamentos.css";
+import PercentageSelector from "../../services/percentSelector";
+import ProdutosAdicionais from "../../services/produtosAdicionais";
+import supabase from "../../external/supabaseconfig";
+import "./criarorcamento.css";
 
 const ComponenteOrcamento = ({ nome, dados, onChange }) => (
   <label>
@@ -27,7 +27,7 @@ const ComponenteOrcamento = ({ nome, dados, onChange }) => (
   </label>
 );
 
-export default function Orcamentos() {
+export default function CriarOrcamento() {
   const [componentes, setComponentes] = useState({
     cliente: "",
     processador: { modelo: "", custo: 0, percent: 0 },
@@ -68,23 +68,25 @@ export default function Orcamentos() {
         const valorComLucro = custo + (custo * percent) / 100;
         return total + valorComLucro;
       }, 0);
-  
-    const totalProdutosAdicionais = produtosAdicionais.reduce((total, produto) => {
-      const valor = Number(produto.valor) || 0;
-      const lucro = Number(produto.lucro) || 0;
-      const valorComLucro = valor + (valor * lucro) / 100;
-      return total + valorComLucro;
-    }, 0);
-  
+
+    const totalProdutosAdicionais = produtosAdicionais.reduce(
+      (total, produto) => {
+        const valor = Number(produto.valor) || 0;
+        const lucro = Number(produto.lucro) || 0;
+        const valorComLucro = valor + (valor * lucro) / 100;
+        return total + valorComLucro;
+      },
+      0,
+    );
+
     return totalComponentes + totalProdutosAdicionais;
   };
-  
 
   const salvarOrcamento = async () => {
     setSalvando(true);
 
     const orcamento = {
-      cliente: componentes.cliente, 
+      cliente: componentes.cliente,
       componentes,
       produtos_adicionais: produtosAdicionais,
       valor_final: calcularValorFinal(),

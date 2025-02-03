@@ -42,28 +42,3 @@ export default function ProdutosAdicionais({
     </div>
   );
 }
-
-/*
-const calcularValorFinal = () => {
-  const lucro = (processadorCusto * processadorPercent) / 100;
-  const valorFinal = processadorCusto + lucro;
-  setValorFinal(valorFinal.toFixed(2));
-};
-
-const handleSubmit = (e) => {
-  e.preventDefault();
-  calcularValorFinal();
-}; 
-
-return (
-  <form onSubmit={handleSubmit}>
-    <h1>Gerar Orçamentos</h1>
-    <label>
-      Processador:
-      <input
-        type="text"
-        placeholder="Insira aqui o modelo da CPU"
-        value={processadorModelo}
-        onChange={(e) => setProcessadorModelo(e.target.value)}
-      />
-*/
