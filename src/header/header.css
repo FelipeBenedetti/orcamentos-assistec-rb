@@ -1,0 +1,44 @@
+.cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px;
+  background-color: burlywood;
+}
+
+.lista{
+  list-style: none;
+  display: flex;
+}
+
+.lista-items {
+  display: inline-block; /* Faz com que os itens fiquem lado a lado */
+}
+
+.lista-link {
+  display: flex;
+  background-color: whitesmoke;
+  margin: 10px;
+  border-radius: 10px;
+
+  text-decoration: none; /* Remove a decoração do texto */
+  color: black; /* Adiciona uma cor para os links */
+  display: block; /* Faz o link ocupar todo o espaço da li */
+  padding: 10px; /* Adiciona algum espaçamento */
+  transition: color 0.3s; /* Transição suave para a mudança de cor */
+}
+
+.lista-link:hover {
+  background-color: bisque;
+  color: blue; /* Cor ao passar o mouse */
+}
+
+
+.logo-img {
+  display: flex;
+  margin: 10px;
+  margin-top: 18px;
+  height: 25px; /* Ajuste o tamanho da logo (menor que antes) */
+  width: auto; /* Mantém a proporção da logo */
+  
+}
