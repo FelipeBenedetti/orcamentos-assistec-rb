@@ -5,7 +5,6 @@ function App() {
   return (
     <div>
       <AppRouter />
-      <Footer />
     </div>
   );
 }

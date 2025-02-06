@@ -6,6 +6,12 @@ export default function ProdutosAdicionais({
   onAdicionar,
   onAtualizar,
 }) {
+  // Função para garantir que o valor seja numérico e válido
+  const handleValueChange = (index, field, value) => {
+    const numero = Number(value);
+    onAtualizar(index, field, isNaN(numero) ? 0 : numero); // Se o valor não for um número, substitui por 0
+  };
+
   return (
     <div>
       <h2>Produtos Adicionais</h2>
@@ -20,15 +26,33 @@ export default function ProdutosAdicionais({
               onChange={(e) => onAtualizar(index, "nome", e.target.value)}
             />
           </label>
+
           <label>
             Valor de Custo:
             <input
               type="number"
               value={produto.valor}
               placeholder="Valor de custo"
-              onChange={(e) => onAtualizar(index, "valor", e.target.value)}
+              onChange={(e) =>
+                handleValueChange(index, "valor", e.target.value)
+              }
             />
           </label>
+
+          <label>
+            Quantidade:
+            <input
+              type="number"
+              min="1" // Garante que o valor mínimo seja 1
+              value={produto.quantidade}
+              placeholder="Quantidade"
+              onChange={(e) => {
+                const novaQuantidade = Math.max(1, Number(e.target.value) || 1); // Evita valores negativos ou zero
+                onAtualizar(index, "quantidade", novaQuantidade);
+              }}
+            />
+          </label>
+
           <PercentageSelector
             label="Lucro:"
             value={produto.lucro}
@@ -37,7 +61,7 @@ export default function ProdutosAdicionais({
         </div>
       ))}
       <button type="button" onClick={onAdicionar}>
-        Adicionar Produto Adicional
+        Adicionar Produto
       </button>
     </div>
   );
