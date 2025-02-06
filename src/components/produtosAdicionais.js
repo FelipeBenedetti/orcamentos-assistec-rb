@@ -1,5 +1,5 @@
 import React from "react";
-import PercentageSelector from "./percentSelector";
+import PercentageSelector from "./dropdownSelector";
 
 export default function ProdutosAdicionais({
   produtos,

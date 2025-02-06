@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import supabase from "../../external/supabaseconfig";
+import './login.css'
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -29,18 +30,18 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-80">
-        <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-        <form onSubmit={handleLogin} className="space-y-4">
+    <div className="container">
+      <div className="div">
+        <h2 className="h2">Login</h2>
+        {error && <p className="error">{error}</p>}
+        <form onSubmit={handleLogin} className="form">
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full p-2 border rounded"
+            className="input"
           />
           <input
             type="password"
@@ -48,11 +49,11 @@ export default function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full p-2 border rounded"
+            className="input"
           />
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+            className="botao"
             disabled={loading}
           >
             {loading ? "Entrando..." : "Entrar"}

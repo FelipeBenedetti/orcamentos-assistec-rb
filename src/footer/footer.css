@@ -1,10 +1,15 @@
 .footer {
+  position: fixed;
+  bottom: 0; /* Fixa o footer no fundo da página */
+  left: 0;
+  width: 100%; /* Faz com que o footer ocupe toda a largura */
   display: flex;
   justify-content: center;
   background-color: black;
   font-style: normal;
   text-decoration: none;
   text-align: center;
+  padding: 10px 0;
 }
 
 .footerh1 {

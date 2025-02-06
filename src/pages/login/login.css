@@ -1,0 +1,49 @@
+.container {
+  background-color: beige;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  border-radius: 20px;
+}
+
+.div {
+  display: flex;
+  flex-direction: column; /* Alinha os itens em coluna */
+  gap: 16px; /* Adiciona um espaço entre os elementos */
+  width: 100%;
+  max-width: 400px; /* Limita a largura máxima */
+}
+
+.h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input {
+  padding: 10px;
+  margin-bottom: 8px; /* Espaçamento inferior entre os inputs */
+  border-radius: 5px;
+  border: 1px solid #ccc; /* Define uma borda para os inputs */
+}
+
+.botao {
+  padding: 10px;
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+}
+
+.form {
+  display: flex;
+  flex-direction: column; /* Garante que os inputs fiquem em coluna */
+  gap: 16px; /* Espaçamento entre os inputs e o botão */
+}
