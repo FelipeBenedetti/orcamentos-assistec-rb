@@ -6,7 +6,7 @@ import ComponenteOrcamento from "../../components/componenteOrcamento";
 
 export default function CriarOrcamento() {
   const [componentes, setComponentes] = useState({
-    cliente: "",
+    cliente: { cliente: "" },
     processador: { modelo: "", custo: 0, percent: 0, quantidade: 1 },
     placaMae: { modelo: "", custo: 0, percent: 0, quantidade: 1 },
     memoriaRam: { modelo: "", custo: 0, percent: 0, quantidade: 1 },
@@ -17,7 +17,6 @@ export default function CriarOrcamento() {
   const [produtosAdicionais, setProdutosAdicionais] = useState([]);
   const [salvando, setSalvando] = useState(false);
 
-  // Atualiza qualquer componente
   const atualizarComponente = (componente, campo, valor) => {
     setComponentes((prev) => ({
       ...prev,
@@ -25,7 +24,6 @@ export default function CriarOrcamento() {
     }));
   };
 
-  // Adiciona um novo produto
   const adicionarProduto = () => {
     setProdutosAdicionais((prev) => [
       ...prev,
@@ -33,33 +31,29 @@ export default function CriarOrcamento() {
     ]);
   };
 
-  // Atualiza um produto adicional
   const atualizarProduto = (index, field, value) => {
     const novosProdutos = [...produtosAdicionais];
     novosProdutos[index][field] = value;
     setProdutosAdicionais(novosProdutos);
   };
 
-  // Função que calcula o valor final do orçamento
   const calcularValorFinal = () => {
-    // Soma os valores dos componentes
     const totalComponentes = Object.entries(componentes)
-      .filter(([key]) => key !== "cliente") // Removemos "cliente"
+      .filter(([key]) => key !== "cliente")
       .reduce((total, [, componente]) => {
         const custo = Number(componente.custo) || 0;
         const percent = Number(componente.percent) || 0;
         const valorComLucro = custo + (custo * percent) / 100;
-        return total + valorComLucro * (componente.quantidade || 1); // Multiplicando pela quantidade
+        return total + valorComLucro * (componente.quantidade || 1);
       }, 0);
 
-    // Soma os valores dos produtos adicionais
     const totalProdutosAdicionais = produtosAdicionais.reduce(
       (total, produto) => {
         const valor = Number(produto.valor) || 0;
         const lucro = Number(produto.lucro) || 0;
-        const quantidade = Number(produto.quantidade) || 1; // Multiplica pela quantidade
+        const quantidade = Number(produto.quantidade) || 1;
         const valorComLucro = valor + (valor * lucro) / 100;
-        return total + valorComLucro * quantidade; // Considera a quantidade no cálculo
+        return total + valorComLucro * quantidade;
       },
       0,
     );
@@ -67,12 +61,11 @@ export default function CriarOrcamento() {
     return totalComponentes + totalProdutosAdicionais;
   };
 
-  // Função para salvar o orçamento no banco
   const salvarOrcamento = async () => {
     setSalvando(true);
 
     const orcamento = {
-      cliente: componentes.cliente,
+      cliente: componentes.cliente.cliente,
       componentes,
       produtos_adicionais: produtosAdicionais,
       valor_final: calcularValorFinal(),
@@ -100,19 +93,13 @@ export default function CriarOrcamento() {
     <div className="orcamentos">
       <form>
         <h1>Orçamentos</h1>
-        <label>
-          Cliente:
-          <input
-            className="input"
-            type="text"
-            placeholder="Insira o nome do cliente"
-            value={componentes.cliente}
-            onChange={(e) =>
-              setComponentes((prev) => ({ ...prev, cliente: e.target.value }))
-            }
-          />
-        </label>
-
+        <ComponenteOrcamento
+          nome="Cliente"
+          dados={componentes.cliente}
+          onChange={(campo, valor) =>
+            atualizarComponente("cliente", campo, valor)
+          }
+        />
         <ComponenteOrcamento
           nome="Processador"
           dados={componentes.processador}
@@ -154,7 +141,7 @@ export default function CriarOrcamento() {
           onAtualizar={atualizarProduto}
         />
         <h2>Valor Final: R$ {calcularValorFinal().toFixed(2)}</h2>
-        <button  type="button" onClick={salvarOrcamento} disabled={salvando}>
+        <button type="button" onClick={salvarOrcamento} disabled={salvando}>
           {salvando ? "Salvando..." : "Salvar Orçamento"}
         </button>
       </form>
