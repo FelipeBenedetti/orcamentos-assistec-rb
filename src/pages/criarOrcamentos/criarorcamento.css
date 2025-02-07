@@ -1,5 +1,14 @@
-.orcamentos {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+button {
+  padding: 10px 20px;
+  background-color: #5c4848;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
 }

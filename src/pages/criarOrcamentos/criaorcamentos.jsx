@@ -61,7 +61,7 @@ export default function CriarOrcamento() {
         const valorComLucro = valor + (valor * lucro) / 100;
         return total + valorComLucro * quantidade; // Considera a quantidade no cálculo
       },
-      0
+      0,
     );
 
     return totalComponentes + totalProdutosAdicionais;
@@ -103,6 +103,7 @@ export default function CriarOrcamento() {
         <label>
           Cliente:
           <input
+            className="input"
             type="text"
             placeholder="Insira o nome do cliente"
             value={componentes.cliente}
@@ -153,7 +154,7 @@ export default function CriarOrcamento() {
           onAtualizar={atualizarProduto}
         />
         <h2>Valor Final: R$ {calcularValorFinal().toFixed(2)}</h2>
-        <button type="button" onClick={salvarOrcamento} disabled={salvando}>
+        <button  type="button" onClick={salvarOrcamento} disabled={salvando}>
           {salvando ? "Salvando..." : "Salvar Orçamento"}
         </button>
       </form>
