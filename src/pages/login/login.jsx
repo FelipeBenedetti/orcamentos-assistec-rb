@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import supabase from "../../external/supabaseconfig";
-import './login.css'
+import "./login.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -51,11 +51,7 @@ export default function Login() {
             required
             className="input"
           />
-          <button
-            type="submit"
-            className="botao"
-            disabled={loading}
-          >
+          <button type="submit" className="botao" disabled={loading}>
             {loading ? "Entrando..." : "Entrar"}
           </button>
         </form>

@@ -53,7 +53,9 @@ const ComponenteOrcamento = ({ nome, dados, onChange }) => {
               min="1"
               placeholder={`Insira aqui a quantidade de ${nome}`}
               value={dados.quantidade}
-              onChange={(e) => handleQuantidadeChange("quantidade", e.target.value)}
+              onChange={(e) =>
+                handleQuantidadeChange("quantidade", e.target.value)
+              }
             />
           </>
         )}
