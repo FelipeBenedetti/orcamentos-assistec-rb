@@ -1,11 +1,12 @@
 .container {
-  background-color: beige;
-  margin: 10px;
+  background-color:  rgb(227, 227, 238);
+  margin: 20px auto;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 40px;
   border-radius: 20px;
+  width: fit-content;
 }
 
 .div {
@@ -26,17 +27,26 @@
   padding: 10px;
   margin-bottom: 8px; /* Espaçamento inferior entre os inputs */
   border-radius: 5px;
-  border: 1px solid #ccc; /* Define uma borda para os inputs */
+  border: 1px solid #f9f9f9; /* Define uma borda para os inputs */
 }
 
 .botao {
-  padding: 10px;
-  background-color: blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #5c4848;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
+
+.botao:hover {
+  background-color: #0056b3;
+}
+
 
 .error {
   color: red;

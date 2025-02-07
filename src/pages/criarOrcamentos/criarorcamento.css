@@ -1,53 +1,34 @@
-.componente-orcamento {
+.container-orcamentos {
+  display: flex;
+  flex-wrap: wrap; /* Permite que os elementos quebrem linha se não couberem */
+  gap: 20px; /* Espaço entre os widgets */
+  padding: 20px;
+}
+
+.form-orcamentos{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.criar-orcamento {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(227, 227, 238);
-  margin: 10px;
-  border-radius: 20px;
-}
-
-label {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-}
-
-input {
-  border-radius: 20px;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #ccc; /* Adiciona uma borda cinza clara */
-  padding: 10px 15px; /* Adiciona espaçamento interno */
-  font-size: 16px; /* Define o tamanho da fonte */
-  background-color: #f9f9f9; /* Define a cor de fundo */
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Adiciona sombra interna */
-  transition:
-    border-color 0.3s,
-    box-shadow 0.3s; /* Adiciona transição suave */
-}
-
-/* Efeito ao focar no input */
-input:focus {
-  border-color: #007bff; /* Muda a cor da borda ao focar */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Adiciona sombra ao focar */
-  outline: none; /* Remove o contorno padrão */
-}
-
-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #5c4848;
-  color: white;
-  border: none;
+  width: fit-content; /* Faz o fundo cobrir apenas o conteúdo */
+  padding: 5px 10px;
+  background-color: white;
   border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  margin: 20px auto; /* Adiciona espaço acima e mantém centralizado */
 }
 
-button:hover {
-  background-color: #0056b3;
+
+.valor-final{
+  background-color: greenyellow;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid;
+  border-radius: 10%;
+  margin: 10px;
+  padding: 15px;
 }

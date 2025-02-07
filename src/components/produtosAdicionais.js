@@ -1,6 +1,6 @@
 import React from "react";
 import PercentageSelector from "./dropdownSelector";
-
+import './produtosAdicionais.css'
 export default function ProdutosAdicionais({
   produtos,
   onAdicionar,
@@ -13,10 +13,10 @@ export default function ProdutosAdicionais({
   };
 
   return (
-    <div>
+    <div className="produto-adicional">
       <h2>Produtos Adicionais</h2>
       {produtos.map((produto, index) => (
-        <div key={index} className="produto-adicional">
+        <div key={index} >
           <label>
             Nome do Produto:
             <input

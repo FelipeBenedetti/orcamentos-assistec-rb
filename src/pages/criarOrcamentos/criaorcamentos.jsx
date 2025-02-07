@@ -90,61 +90,70 @@ export default function CriarOrcamento() {
   };
 
   return (
-    <div className="orcamentos">
-      <form>
-        <h1>Orçamentos</h1>
-        <ComponenteOrcamento
-          nome="Cliente"
-          dados={componentes.cliente}
-          onChange={(campo, valor) =>
-            atualizarComponente("cliente", campo, valor)
-          }
-        />
-        <ComponenteOrcamento
-          nome="Processador"
-          dados={componentes.processador}
-          onChange={(campo, valor) =>
-            atualizarComponente("processador", campo, valor)
-          }
-        />
-        <ComponenteOrcamento
-          nome="Placa Mãe"
-          dados={componentes.placaMae}
-          onChange={(campo, valor) =>
-            atualizarComponente("placaMae", campo, valor)
-          }
-        />
-        <ComponenteOrcamento
-          nome="Memória Ram"
-          dados={componentes.memoriaRam}
-          onChange={(campo, valor) =>
-            atualizarComponente("memoriaRam", campo, valor)
-          }
-        />
-        <ComponenteOrcamento
-          nome="Armazenamento"
-          dados={componentes.armazenamento}
-          onChange={(campo, valor) =>
-            atualizarComponente("armazenamento", campo, valor)
-          }
-        />
-        <ComponenteOrcamento
-          nome="Gabinete"
-          dados={componentes.gabinete}
-          onChange={(campo, valor) =>
-            atualizarComponente("gabinete", campo, valor)
-          }
-        />
-        <ProdutosAdicionais
-          produtos={produtosAdicionais}
-          onAdicionar={adicionarProduto}
-          onAtualizar={atualizarProduto}
-        />
-        <h2>Valor Final: R$ {calcularValorFinal().toFixed(2)}</h2>
-        <button type="button" onClick={salvarOrcamento} disabled={salvando}>
+    <>
+      <h1 className="criar-orcamento">Criar Orçamento</h1>
+      <div className="container-orcamentos">
+        <form className="form-orcamentos">
+          <ComponenteOrcamento
+            nome="Cliente"
+            dados={componentes.cliente}
+            onChange={(campo, valor) =>
+              atualizarComponente("cliente", campo, valor)
+            }
+          />
+          <ComponenteOrcamento
+            nome="Processador"
+            dados={componentes.processador}
+            onChange={(campo, valor) =>
+              atualizarComponente("processador", campo, valor)
+            }
+          />
+          <ComponenteOrcamento
+            nome="Placa Mãe"
+            dados={componentes.placaMae}
+            onChange={(campo, valor) =>
+              atualizarComponente("placaMae", campo, valor)
+            }
+          />
+          <ComponenteOrcamento
+            nome="Memória Ram"
+            dados={componentes.memoriaRam}
+            onChange={(campo, valor) =>
+              atualizarComponente("memoriaRam", campo, valor)
+            }
+          />
+          <ComponenteOrcamento
+            nome="Armazenamento"
+            dados={componentes.armazenamento}
+            onChange={(campo, valor) =>
+              atualizarComponente("armazenamento", campo, valor)
+            }
+          />
+          <ComponenteOrcamento
+            nome="Gabinete"
+            dados={componentes.gabinete}
+            onChange={(campo, valor) =>
+              atualizarComponente("gabinete", campo, valor)
+            }
+          />
+          <ProdutosAdicionais
+            produtos={produtosAdicionais}
+            onAdicionar={adicionarProduto}
+            onAtualizar={atualizarProduto}
+          />
+        </form>
+        <button
+          className="salvar"
+          type="button"
+          onClick={salvarOrcamento}
+          disabled={salvando}
+        >
           {salvando ? "Salvando..." : "Salvar Orçamento"}
         </button>
-      </form>
-    </div>
+        <h2 className="valor-final">
+          Valor Final: R$ {calcularValorFinal().toFixed(2)}
+        </h2>
+      </div>
+    </>
   );
 }
