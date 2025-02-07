@@ -31,14 +31,14 @@ const ComponenteOrcamento = ({ nome, dados, onChange }) => {
             <h4>Modelo</h4>
             <input
               type="text"
-              placeholder={`Insira aqui o modelo do ${nome}`}
+              placeholder={`Modelo do ${nome}`}
               value={dados.modelo}
               onChange={(e) => onChange("modelo", e.target.value)}
             />
             <h4>Custo</h4>
             <input
               type="number"
-              placeholder={`Insira aqui o custo do ${nome}`}
+              placeholder={`Custo do ${nome}`}
               value={dados.custo}
               onChange={(e) => handleNumberChange("custo", e.target.value)}
             />
@@ -51,7 +51,7 @@ const ComponenteOrcamento = ({ nome, dados, onChange }) => {
             <input
               type="number"
               min="1"
-              placeholder={`Insira aqui a quantidade de ${nome}`}
+              placeholder={`Quantidade de ${nome}`}
               value={dados.quantidade}
               onChange={(e) =>
                 handleQuantidadeChange("quantidade", e.target.value)
