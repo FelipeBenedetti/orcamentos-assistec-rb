@@ -42,18 +42,19 @@ export default function ListarOrcamentos() {
 
   return (
     <>
-      <h1 className="titulo">Lista de Orçamentos</h1>
-      <div className="listar-orcamentos">
+      <h4 className="titulo">Lista de Orçamentos</h4>
+      <div className="listar-orcamentos-div">
         {carregando ? <p>Carregando orçamentos...</p> : null}
 
         <ul>
           {orcamentos.map((orcamento) => (
-            <li key={orcamento.id}>
+            <div className="orcamentos-widget" key={orcamento.id}>
               <strong>ID:</strong> {orcamento.id} <strong>Cliente:</strong>{" "}
               {orcamento.cliente}
+              <strong>  </strong>
               <strong>Valor Final:</strong> R${" "}
               {orcamento.valor_final?.toFixed(2) || "0.00"}
-              <button
+              <button className="botoes"
                 onClick={() => {
                   console.log("Orçamento selecionado:", orcamento);
                   setOrcamentoSelecionado(orcamento);
@@ -61,28 +62,31 @@ export default function ListarOrcamentos() {
               >
                 Abrir
               </button>
-              <button
+              <button className="botoes"
                 onClick={() => excluirOrcamento(orcamento.id)}
                 style={{ color: "red" }}
               >
                 Excluir
               </button>
-            </li>
+            </div>
           ))}
         </ul>
 
         {orcamentoSelecionado && (
-          <div>
+          <div className="detalhes-do-orcamento">
             <h2>Detalhes do Orçamento</h2>
             <p>
               <strong>ID:</strong> {orcamentoSelecionado.id}
             </p>
             <p>
+              <strong>Cliente:</strong> {orcamentoSelecionado.cliente}
+            </p>
+            <p>
               <strong>Data:</strong>{" "}
               {orcamentoSelecionado.data_criacao
                 ? new Date(
-                    orcamentoSelecionado.data_criacao,
-                  ).toLocaleDateString()
+                  orcamentoSelecionado.data_criacao,
+                ).toLocaleDateString()
                 : "Data não disponível"}
             </p>
 
@@ -94,29 +98,37 @@ export default function ListarOrcamentos() {
             <h3>Componentes:</h3>
             <ul>
               {orcamentoSelecionado.componentes ? (
-                Object.entries(orcamentoSelecionado.componentes).map(
-                  ([key, comp]) => (
-                    <li key={key}>
-                      <strong>{key}:</strong>{" "}
-                      {comp?.modelo || "Modelo desconhecido"} - R$
-                      {comp?.custo ? comp.custo.toFixed(2) : "0.00"} (+
-                      {comp?.percent || 0}%)
-                    </li>
-                  ),
-                )
+                <li>
+                  <p>
+                    <strong>Processador:</strong> {orcamentoSelecionado.componentes.processador.modelo}
+                  </p>
+                  <p>
+                    <strong>Placa Mãe:</strong> {orcamentoSelecionado.componentes.placaMae.modelo}
+                  </p>
+                  <p>
+                    <strong>Memória Ram:</strong> {orcamentoSelecionado.componentes.memoriaRam.modelo}
+                  </p>
+                  <p>
+                    <strong>Armazenamento:</strong> {orcamentoSelecionado.componentes.armazenamento.modelo}
+                  </p>
+                  <p>
+                    <strong>Gabinete:</strong> {orcamentoSelecionado.componentes.gabinete.modelo}
+                  </p>
+                </li>
               ) : (
                 <p>Nenhum componente encontrado.</p>
               )}
             </ul>
 
+
+
             <h3>Produtos Adicionais:</h3>
             <ul>
               {Array.isArray(orcamentoSelecionado.produtos_adicionais) &&
-              orcamentoSelecionado.produtos_adicionais.length > 0 ? (
+                orcamentoSelecionado.produtos_adicionais.length > 0 ? (
                 orcamentoSelecionado.produtos_adicionais.map((prod, index) => (
                   <li key={index}>
-                    {prod?.nome || "Nome desconhecido"} - R${" "}
-                    {prod?.valor || "0.00"} (+{prod?.lucro || 0}%)
+                    {prod?.nome || "Nome desconhecido"} {" "}
                   </li>
                 ))
               ) : (
@@ -127,7 +139,7 @@ export default function ListarOrcamentos() {
             <h2>
               Total: R$ {orcamentoSelecionado.valor_final?.toFixed(2) || "0.00"}
             </h2>
-            <button onClick={() => setOrcamentoSelecionado(null)}>
+            <button className="botoes" onClick={() => setOrcamentoSelecionado(null)}>
               Fechar
             </button>
           </div>
@@ -136,3 +148,24 @@ export default function ListarOrcamentos() {
     </>
   );
 }
+
+
+
+
+//<h3>Componentes:</h3>
+//<ul>
+//  {orcamentoSelecionado.componentes ? (
+//    Object.entries(orcamentoSelecionado.componentes).map(
+//      ([key, comp]) => (
+//        <li>
+//          <strong>{key}:</strong>{" "}
+//          {comp?.modelo || "Modelo desconhecido"} - R$
+//          {comp?.custo ? comp.custo.toFixed(2) : "0.00"} (+
+//          {comp?.percent || 0}%)
+//        </li>
+//      ),
+//    )
+//  ) : (
+//    <p>Nenhum componente encontrado.</p>
+//  )}
+//</ul>

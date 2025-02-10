@@ -1,14 +1,89 @@
-.titulo{
+.titulo {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: aliceblue;
-  width: fit-content; /* Faz o fundo cobrir apenas o conteúdo */
-  margin: 20px auto; /* Adiciona espaço acima e mantém centralizado */
+  background-color: whitesmoke;
+  width: fit-content;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 20px;
 }
 
-.listar-orcamentos{
+.listar-orcamentos-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.listar-orcamentos-div ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.orcamentos-widget {
+  background-color: lightgray;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+}
+
+.botoes {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 7px;
+}
+
+
+/* Container principal dos detalhes */
+.detalhes-do-orcamento {
+  display: flex;
+  flex-direction: column;         /* Itens dispostos verticalmente */
+  background-color: #f9f9f9;        /* Fundo mais suave */
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 800px;
+  margin: 20px auto;              /* Centraliza horizontalmente e adiciona margem vertical */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  gap: 20px;                      /* Espaçamento entre os elementos filhos */
+}
+
+/* Títulos */
+.detalhes-do-orcamento h2,
+.detalhes-do-orcamento h3 {
+  text-align: center;
+  color: #333;
+  margin: 0;
+}
+
+/* Parágrafos */
+.detalhes-do-orcamento p {
+  margin: 5px 0;
+  color: #555;
+}
+
+/* Estilo das listas */
+.detalhes-do-orcamento ul {
+  list-style: none;   /* Remove as bolinhas da lista */
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+/* Estilo dos itens da lista */
+.detalhes-do-orcamento li {
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  color: #333;
 }
