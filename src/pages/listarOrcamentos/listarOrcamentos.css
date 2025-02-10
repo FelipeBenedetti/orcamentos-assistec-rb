@@ -1,0 +1,14 @@
+.titulo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aliceblue;
+  width: fit-content; /* Faz o fundo cobrir apenas o conteúdo */
+  margin: 20px auto; /* Adiciona espaço acima e mantém centralizado */
+}
+
+.listar-orcamentos{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
