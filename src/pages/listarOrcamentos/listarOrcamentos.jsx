@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from "react";
+// Importações do react-pdf/renderer para o link de download
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import OrcamentoPDF from "../../components/orcamentoPDF.modelo";
+
 import supabase from "../../external/supabaseconfig";
 import "./listarOrcamentos.css";
 
@@ -142,6 +146,26 @@ export default function ListarOrcamentos() {
             <button className="botoes" onClick={() => setOrcamentoSelecionado(null)}>
               Fechar
             </button>
+
+            <PDFDownloadLink
+              document={<OrcamentoPDF orcamento={orcamentoSelecionado} />}
+              fileName="orcamento.pdf"
+              style={{
+                textDecoration: "none",
+                padding: "10px",
+                color: "#fff",
+                textAlign: "center",
+                backgroundColor: "#5c4848",
+                border: "none",
+                borderRadius: "10px",
+                display: "inline-block",
+                marginTop: "2px"
+              }}
+            >
+              {({ loading }) =>
+                loading ? "Carregando PDF..." : "Baixar PDF"
+              }
+            </PDFDownloadLink>
           </div>
         )}
       </div>
@@ -150,22 +174,3 @@ export default function ListarOrcamentos() {
 }
 
 
-
-
-//<h3>Componentes:</h3>
-//<ul>
-//  {orcamentoSelecionado.componentes ? (
-//    Object.entries(orcamentoSelecionado.componentes).map(
-//      ([key, comp]) => (
-//        <li>
-//          <strong>{key}:</strong>{" "}
-//          {comp?.modelo || "Modelo desconhecido"} - R$
-//          {comp?.custo ? comp.custo.toFixed(2) : "0.00"} (+
-//          {comp?.percent || 0}%)
-//        </li>
-//      ),
-//    )
-//  ) : (
-//    <p>Nenhum componente encontrado.</p>
-//  )}
-//</ul>
